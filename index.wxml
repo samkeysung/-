@@ -1,0 +1,78 @@
+<view class="container">
+  <!-- 头部 -->
+  <view class="header">
+    <text class="title">Keo总裁办</text>
+    <text class="subtitle">目标：掌控每一个清晨</text>
+    <view class="analysis-btn" bindtap="openAnalysis">
+      <text>📊 行为洞察</text>
+    </view>
+  </view>
+
+  <!-- 核心功能区：可视化定制 -->
+  <view class="creator-card">
+    <view class="time-picker">
+      <picker-view indicator-style="height: 50px;" value="{{[selectedHour, selectedMinute]}}" bindchange="onHourChange">
+        <picker-view-column>
+          <view wx:for="{{24}}" wx:key="*this">{{item}}时</view>
+        </picker-view-column>
+        <picker-view-column>
+          <view wx:for="{{60}}" wx:key="*this">{{item}}分</view>
+        </picker-view-column>
+      </picker-view>
+    </view>
+    
+    <view class="options-row">
+      <view class="option-item" bindtap="openRingtoneModal">
+        <text class="icon">🔔</text>
+        <text>{{ringtones[currentRingtoneIndex]}}</text>
+      </view>
+    </view>
+
+    <button class="add-btn" bindtap="addAlarm">立即制定计划</button>
+  </view>
+
+  <!-- 闹钟列表 -->
+  <view class="list-section">
+    <text class="section-title">已部署任务</text>
+    <view class="alarm-list">
+      <view class="alarm-item" wx:for="{{alarmList}}" wx:key="id">
+        <view class="alarm-info">
+          <text class="alarm-time">{{item.time}}</text>
+          <text class="alarm-label">{{item.label}}</text>
+        </view>
+        <view class="alarm-actions">
+          <text class="ringtone-name">{{item.ringtone}}</text>
+          <switch checked="{{item.active}}" bindtap="toggleSwitch" data-id="{{item.id}}" color="#000"/>
+        </view>
+        <view class="delete-icon" bindtap="deleteAlarm" data-id="{{item.id}}">×</view>
+      </view>
+      
+      <view wx:if="{{alarmList.length === 0}}" class="empty-state">
+        <text>暂无任务，请制定计划</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 铃声选择弹窗 -->
+  <view class="modal {{showRingtoneModal ? 'show' : ''}}">
+    <view class="modal-content">
+      <picker mode="selector" range="{{ringtones}}" value="{{currentRingtoneIndex}}" bindchange="selectRingtone">
+        <button class="modal-confirm">选择声音</button>
+      </picker>
+      <button class="modal-cancel" bindtap="showRingtoneModal = false">取消</button>
+    </view>
+  </view>
+
+  <!-- 分析板块弹窗 -->
+  <view class="modal {{showAnalysisModal ? 'show' : ''}}">
+    <view class="modal-content analysis-content">
+      <text class="analysis-score">综合评分：{{analysisData.score}}</text>
+      <text class="analysis-text">{{analysisData.trend}}</text>
+      <view class="prediction-box">
+        <text class="prediction-title">AI 预测建议：</text>
+        <text class="prediction-text">{{analysisData.prediction}}</text>
+      </view>
+      <button class="modal-confirm" bindtap="showAnalysisModal = false">朕知道了</button>
+    </view>
+  </view>
+</view>
