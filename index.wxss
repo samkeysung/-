@@ -1,0 +1,213 @@
+/* 全局背景 */
+page {
+  background-color: #f5f5f7;
+  font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Segoe UI, Arial, Roboto, 'PingFang SC', 'miui', 'Hiragino Sans GB', 'Microsoft Yahei', sans-serif;
+  color: #333;
+}
+
+.container {
+  padding: 20rpx;
+  padding-bottom: 100rpx;
+}
+
+/* 头部 */
+.header {
+  text-align: center;
+  padding: 40rpx 0;
+  background: linear-gradient(135deg, #1a1a1a 0%, #333 100%);
+  border-radius: 20rpx;
+  margin-bottom: 30rpx;
+  color: #fff;
+  position: relative;
+}
+
+.title {
+  font-size: 48rpx;
+  font-weight: bold;
+  display: block;
+  letter-spacing: 2rpx;
+}
+
+.subtitle {
+  font-size: 24rpx;
+  opacity: 0.8;
+  margin-top: 10rpx;
+  display: block;
+}
+
+.analysis-btn {
+  position: absolute;
+  right: 20rpx;
+  top: 20rpx;
+  background: rgba(255,255,255,0.2);
+  padding: 10rpx 20rpx;
+  border-radius: 30rpx;
+  font-size: 22rpx;
+}
+
+/* 创建卡片 */
+.creator-card {
+  background: #fff;
+  border-radius: 20rpx;
+  padding: 30rpx;
+  box-shadow: 0 10rpx 30rpx rgba(0,0,0,0.05);
+  margin-bottom: 30rpx;
+}
+
+.time-picker {
+  height: 300rpx;
+  width: 100%;
+  background: #fafafa;
+  border-radius: 10rpx;
+  overflow: hidden;
+}
+
+.options-row {
+  display: flex;
+  justify-content: center;
+  margin: 20rpx 0;
+}
+
+.option-item {
+  display: flex;
+  align-items: center;
+  background: #f0f0f0;
+  padding: 15rpx 30rpx;
+  border-radius: 50rpx;
+}
+
+.add-btn {
+  background: #000;
+  color: #fff;
+  border-radius: 50rpx;
+  font-weight: bold;
+  margin-top: 20rpx;
+}
+
+/* 列表区域 */
+.section-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  margin-left: 10rpx;
+  display: block;
+  margin-bottom: 20rpx;
+}
+
+.alarm-item {
+  background: #fff;
+  padding: 30rpx;
+  border-radius: 20rpx;
+  margin-bottom: 20rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 5rpx 15rpx rgba(0,0,0,0.02);
+  position: relative;
+}
+
+.alarm-time {
+  font-size: 40rpx;
+  font-weight: bold;
+  display: block;
+}
+
+.alarm-label {
+  font-size: 24rpx;
+  color: #999;
+}
+
+.alarm-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.ringtone-name {
+  font-size: 22rpx;
+  color: #666;
+  margin-bottom: 10rpx;
+}
+
+.delete-icon {
+  position: absolute;
+  bottom: 10rpx;
+  left: 20rpx;
+  color: #ddd;
+  font-size: 30rpx;
+}
+
+.empty-state {
+  text-align: center;
+  color: #ccc;
+  padding: 50rpx 0;
+}
+
+/* 弹窗通用样式 */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal.show {
+  display: flex;
+}
+
+.modal-content {
+  background: #fff;
+  width: 80%;
+  padding: 40rpx;
+  border-radius: 20rpx;
+  text-align: center;
+}
+
+.analysis-content {
+  text-align: left;
+}
+
+.analysis-score {
+  font-size: 80rpx;
+  color: #d4af37; /* 金色 */
+  font-weight: bold;
+  display: block;
+  text-align: center;
+}
+
+.analysis-text {
+  display: block;
+  margin: 20rpx 0;
+  line-height: 1.6;
+  color: #555;
+}
+
+.prediction-box {
+  background: #f9f9f9;
+  padding: 20rpx;
+  border-radius: 10rpx;
+  border-left: 5rpx solid #000;
+  margin: 20rpx 0;
+}
+
+.prediction-title {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 10rpx;
+}
+
+.modal-confirm, .modal-cancel {
+  margin-top: 20rpx;
+  width: 100%;
+  background: #000;
+  color: #fff;
+}
+.modal-cancel {
+  background: #eee;
+  color: #333;
+}
