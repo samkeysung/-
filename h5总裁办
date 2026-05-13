@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Keo总裁办 - 唤醒你的野心</title>
+    <style>
+        :root {
+            --primary-color: #000000;
+            --accent-color: #D4AF37; /* 金色 */
+            --bg-color: #F5F5F7;
+            --card-bg: #FFFFFF;
+            --text-main: #1A1A1A;
+            --text-sub: #666666;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* 头部样式 */
+        .header {
+            background: linear-gradient(135deg, #1a1a1a 0%, #333 100%);
+            color: white;
+            padding: 30px 20px;
+            border-bottom-left-radius: 20px;
+            border-bottom-right-radius: 20px;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .header h1 { margin: 0; font-size: 28px; letter-spacing: 1px; }
+        .header p { margin: 5px 0 0; font-size: 12px; opacity: 0.7; }
+        
+        .analysis-badge {
+            position: absolute;
+            right: 15px;
+            top: 15px;
+            background: rgba(255,255,255,0.15);
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 12px;
+            cursor: pointer;
+            backdrop-filter: blur(4px);
+        }
+
+        /* 核心控制区 */
+        .creator-card {
+            background: var(--card-bg);
+            margin: -20px 15px 20px;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            text-align: center;
+        }
+
+        .time-display {
+            font-size: 48px;
+            font-weight: bold;
+            margin: 10px 0;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .time-inputs {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .time-inputs input {
+            width: 60px;
+            padding: 10px;
+            font-size: 18px;
+            text-align: center;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            outline: none;
+        }
+
+        .ringtone-selector {
+            margin-bottom: 20px;
+            text-align: left;
+            padding: 0 10px;
+        }
+        
+        select {
+            width: 100%;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            background: #fafafa;
+            font-size: 14px;
+        }
+
+        .add-btn {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            width: 100%;
+            padding: 15px;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.1s;
+        }
+
+        .add-btn:active { transform: scale(0.98); }
+
+        /* 列表样式 */
+        .alarm-list {
+            padding: 0 15px;
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .alarm-item {
+            background: var(--card-bg);
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+        }
+
+        .alarm-time { font-size: 24px; font-weight: bold; display: block; }
+        .alarm-label { font-size: 12px; color: var(--text-sub); }
+        
+        .delete-btn {
+            color: #ff4d4f;
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            margin-left: 15px;
+        }
+
+        /* 弹窗 */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 100;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            width: 80%;
+            max-width: 300px;
+            text-align: center;
+            animation: popIn 0.3s ease;
+        }
+
+        @keyframes popIn {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .score-big { font-size: 60px; color: var(--accent-color); font-weight: bold; display: block; }
+        .prediction-box { background: #f9f9f9; padding: 15px; border-radius: 8px; margin: 15px 0; text-align: left; font-size: 14px; border-left: 4px solid var(--primary-color); }
+        
+        .close-modal {
+            background: #eee;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            width: 100%;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 头部 -->
+    <div class="header">
+        <div class="analysis-badge" onclick="openAnalysis()">📊 行为洞察</div>
+        <h1>Keo总裁办</h1>
+        <p>目标：掌控每一个清晨</p>
+    </div>
+
+    <!-- 设置区域 -->
+    <div class="creator-card">
+        <div class="time-display" id="currentTimeDisplay">07:00</div>
+        <div class="time-inputs">
+            <input type="number" id="hourInput" value="07" min="0" max="23">
+            <span style="font-size: 24px;">:</span>
+            <input type="number" id="minuteInput" value="00" min="0" max="59">
+        </div>
+        
+        <div class="ringtone-selector">
+            <select id="ringtoneSelect">
+                <option value="激昂交响曲">激昂交响曲</option>
+                <option value="CEO的呼唤">CEO的呼唤</option>
+                <option value="自然鸟叫">自然鸟叫</option>
+                <option value="收款到账音">收款到账音</option>
+            </select>
+        </div>
+
+        <button class="add-btn" onclick="addAlarm()">立即制定计划</button>
+    </div>
+
+    <!-- 列表区域 -->
+    <div class="alarm-list">
+        <span class="section-title">已部署任务</span>
+        <div id="alarmListContainer">
+            <!-- 动态生成 -->
+        </div>
+    </div>
+
+    <!-- 分析弹窗 -->
+    <div id="analysisModal" class="modal">
+        <div class="modal-content">
+            <span class="score-big" id="analysisScore">88</span>
+            <p id="analysisText">本周早起率提升了 15%，击败了全国 90% 的总裁。</p>
+            <div class="prediction-box">
+                <strong>AI 预测建议：</strong><br>
+                <span id="predictionText">根据大数据，您下周一需要在 06:45 设置闹钟以避开早高峰。</span>
+            </div>
+            <button class="close-modal" onclick="closeAnalysis()">朕知道了</button>
+        </div>
+    </div>
+
+    <script>
+        // 状态管理
+        let alarms = [
+            { id: 1, time: '07:00', label: '早起打卡', ringtone: '激昂交响曲' },
+            { id: 2, time: '07:30', label: '备用方案', ringtone: 'CEO的呼唤' }
+        ];
+
+        // 初始化
+        function renderAlarms() {
+            const container = document.getElementById('alarmListContainer');
+            container.innerHTML = '';
+
+            if (alarms.length === 0) {
+                container.innerHTML = '<div style="text-align:center; color:#999; padding:20px;">暂无任务，请制定计划</div>';
+                return;
+            }
+
+            alarms.forEach(alarm => {
+                const item = document.createElement('div');
+                item.className = 'alarm-item';
+                item.innerHTML = `
+                    <div>
+                        <span class="alarm-time">${alarm.time}</span>
+                        <span class="alarm-label">${alarm.label} · ${alarm.ringtone}</span>
+                    </div>
+                    <button class="delete-btn" onclick="deleteAlarm(${alarm.id})">×</button>
+                `;
+                container.appendChild(item);
+            });
+        }
+
+        // 添加闹钟
+        function addAlarm() {
+            const hour = document.getElementById('hourInput').value.padStart(2, '0');
+            const minute = document.getElementById('minuteInput').value.padStart(2, '0');
+            const ringtone = document.getElementById('ringtoneSelect').value;
+            
+            const timeStr = `${hour}:${minute}`;
+            
+            // 简单去重
+            const exists = alarms.some(a => a.time === timeStr);
+            if (exists) {
+                alert('该时间已有闹钟，总裁请换个时间！');
+                return;
+            }
+
+            alarms.push({
+                id: Date.now(),
+                time: timeStr,
+                label: '新计划',
+                ringtone: ringtone
+            });
+
+            // 重新排序
+            alarms.sort((a, b) => a.time.localeCompare(b.time));
+            renderAlarms();
+            
+            // 震动反馈 (如果设备支持)
+            if (navigator.vibrate) navigator.vibrate(50);
+        }
+
+        // 删除闹钟
+        function deleteAlarm(id) {
+            alarms = alarms.filter(a => a.id !== id);
+            renderAlarms();
+        }
+
+        // 实时更新时间显示
+        setInterval(() => {
+            const now = new Date();
+            const h = now.getHours().toString().padStart(2, '0');
+            const m = now.getMinutes().toString().padStart(2, '0');
+            document.getElementById('currentTimeDisplay').innerText = `${h}:${m}`;
+            
+            checkAlarm(h, m);
+        }, 1000);
+
+        // 简单的闹钟检查逻辑
+        function checkAlarm(currentH, currentM) {
+            const currentTime = `${currentH}:${currentM}`;
+            const match = alarms.find(a => a.time === currentTime && !a.triggered);
+            
+            if (match) {
+                alert(`⏰ 起床了，Keo总裁！\n铃声：${match.ringtone}`);
+                match.triggered = true; // 防止一分钟内重复弹窗
+                setTimeout(() => { match.triggered = false; }, 60000); // 1分钟后重置
+            }
+        }
+
+        // 分析板块逻辑
+        function openAnalysis() {
+            // 模拟数据计算
+            const score = Math.floor(Math.random() * (98 - 70) + 70);
+            document.getElementById('analysisScore').innerText = score;
+            document.getElementById('analysisText').innerText = "根据您的作息数据，您的精力管理水平超过了 95% 的同龄人。";
+            document.getElementById('predictionText').innerText = "预测明天早晨 06:55 是最佳唤醒时机，有助于保持全天高效。";
+            
+            document.getElementById('analysisModal').style.display = 'flex';
+        }
+
+        function closeAnalysis() {
+            document.getElementById('analysisModal').style.display = 'none';
+        }
+
+        // 初始渲染
+        renderAlarms();
+    </script>
+</body>
+</html>
